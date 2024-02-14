@@ -9,9 +9,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // double firstnum = 0.0;
-  // double secondnum = 0.0;
-  // String operator = '';
   String input = '';
   String output = '';
 
