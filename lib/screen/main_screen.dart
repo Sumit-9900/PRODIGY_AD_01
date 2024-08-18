@@ -1,5 +1,5 @@
+import 'package:calculator_1/main_logic.dart';
 import 'package:flutter/material.dart';
-import 'package:math_expressions/math_expressions.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -9,34 +9,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  String input = '';
-  String output = '';
-
-  onButtonClick(value) {
-    if (value == "AC") {
-      input = '';
-      output = '';
-    } else if (value == '<') {
-      if (input.isNotEmpty) {
-        input = input.substring(0, input.length - 1);
-      }
-    } else if (value == '=') {
-      if (input.isNotEmpty) {
-        String userInput = input;
-        userInput = input.replaceAll('x', '*');
-        Parser p = Parser();
-        Expression exp = p.parse(userInput);
-        ContextModel cm = ContextModel();
-        var finalvalue = exp.evaluate(EvaluationType.REAL, cm);
-        output = finalvalue.toString();
-        if (output.endsWith('.0')) {
-          output = output.substring(0, output.length - 2);
-        }
-      }
-    } else {
-      input = input + value;
-    }
-    setState(() {});
+  final MainLogic logic = MainLogic();
+  void onButtonClick(String value) {
+    setState(() {
+      logic.onButtonClick(value);
+    });
   }
 
   @override
@@ -53,7 +30,7 @@ class _MainScreenState extends State<MainScreen> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(
-                    input,
+                    logic.input,
                     maxLines: 1,
                     style: const TextStyle(
                       fontSize: 38.0,
@@ -64,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
                     height: 5.0,
                   ),
                   Text(
-                    output,
+                    logic.output,
                     maxLines: 1,
                     style: const TextStyle(
                       fontSize: 24.0,
